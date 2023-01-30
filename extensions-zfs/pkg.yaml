@@ -1,0 +1,25 @@
+name: zfs
+variant: scratch
+shell: /toolchain/bin/bash
+dependencies:
+  - stage: base
+  - image: ""
+  - stage: zpool-import-wrapper
+steps:
+  - install:
+      - |
+
+        mkdir -p /rootfs/lib/modules
+        cp -R /lib/modules/* /rootfs/lib/modules
+
+        mkdir -p /rootfs/usr/local/sbin
+        cp -R /usr/local/sbin/* /rootfs/usr/local/sbin
+
+        mkdir -p /rootfs/usr/local/lib/containers/zpool-import-wrapper
+        cp /rootfs/usr/local/sbin/zpool-import-wrapper /rootfs/usr/local/lib/containers/zpool-import-wrapper
+
+finalize:
+  - from: /rootfs
+    to: /rootfs
+  - from: /pkg/manifest.yaml
+    to: /

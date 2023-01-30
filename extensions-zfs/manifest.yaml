@@ -1,0 +1,10 @@
+version: v1alpha1
+metadata:
+  name: zfs
+  version: "$VERSION"
+  author: Andrzej Szeszo
+  description: |
+    This system extension provides ZFS kernel modules and zpool and zfs userland utilities
+  compatibility:
+    talos:
+      version: ">= v1.3.0"

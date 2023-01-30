@@ -1,0 +1,25 @@
+name: zpool-import-wrapper
+variant: scratch
+shell: /toolchain/bin/bash
+dependencies:
+  - stage: base
+steps:
+  - build:
+    - |
+      export PATH=${PATH}:${TOOLCHAIN}/go/bin
+
+      cp -r /pkg/* .
+
+      CGO_ENABLED=0 go build -o zpool-import-wrapper main.go
+    install:
+    - |
+
+      mkdir -p /rootfs/usr/local/sbin
+      cp zpool-import-wrapper /rootfs/usr/local/sbin/zpool-import-wrapper
+
+      mkdir -p /rootfs/usr/local/etc/containers
+      cp service.yaml /rootfs/usr/local/etc/containers/zpool-import-wrapper.yaml
+
+finalize:
+  - from: /rootfs
+    to: /rootfs

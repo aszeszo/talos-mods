@@ -1,0 +1,27 @@
+name: zpool-import-wrapper
+depends:
+  - service: udevd
+container:
+  entrypoint: /zpool-import-wrapper
+  mounts:
+    - source: /dev
+      destination: /dev
+      type: bind
+      options:
+        - rshared
+        - rbind
+        - rw
+    - source: /usr/local/sbin
+      destination: /usr/local/sbin
+      type: bind
+      options:
+        - bind
+        - ro
+    - source: /var/mnt
+      destination: /var/mnt
+      type: bind
+      options:
+        - rshared
+        - rbind
+        - rw
+restart: always
